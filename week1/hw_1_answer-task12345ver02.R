@@ -85,7 +85,7 @@ x<- sample(0:9,size=1)
 y<- sample(0:9,size=1)
 z<- sample(0:9,size=1)
 w<- sample(0:9,size=1)
-print(paste("隨機四位數：",x,y,z,w))
+
 # 計數器
 t<-0
 
@@ -123,9 +123,18 @@ if (x==k1){
 {
   if(x==k2){
     b<-b+1
+    if (k2==k3){  #k2和k3只能算一次
+      b<b-1
+    }
+    if (k2==k4){
+      b<b-1
+    }
   }else if(x==k3)
   {
     b<-b+1
+    if (k3==k4){
+      b<-b-1
+    }
   }else if(x==k4)
   {
     b<-b+1
@@ -147,9 +156,18 @@ if (y==k2)
 {
   if(y==k1){
     b<-b+1
+    if(k1==k3){
+      b<-b-1
+    }
+    if(k1==k4){
+      b<-b-1
+    }
   }
   else if(y==k3){
     b<-b+1
+    if(k3==k4){
+      b<-b-1
+    }
   }
   else if(y==k4){
     b<-b+1
@@ -171,9 +189,18 @@ if (z==k3)
 {
   if(z==k1){
     b<-b+1
+    if(k1==k2){
+      b<-b-1
+    }
+    if(k1==k4){
+      b<-b-1
+    }
   }
   else if(z==k2){
     b<-b+1
+    if(k2==k4){
+      b<-b-1
+    }
   }
   else if(z==k4){
     b<-b+1
@@ -195,9 +222,18 @@ if (w==k4)
 {
   if(w==k1){
     b<-b+1
+    if(k1==k2){
+      b<-b-1
+    }
+    if(k1==k3){
+      b<-b-1
+    }
   }
   else if(w==k2){
     b<-b+1
+    if(k2==k3){
+      b<-b-1
+    }
   }
   else if(w==k3){
     b<-b+1
