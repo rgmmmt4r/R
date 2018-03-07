@@ -57,14 +57,23 @@ for (x in c(26:50)) {
 ########################################################### Task 4
 
 # 請寫一段程式碼，能判斷輸入之西元年分 year 是否為閏年
-year<-readline(prompt="Enter Year:")
-
-#如果輸入的數字是4的倍數
-if (year %% 4 == 0){
-  print("4的倍數")
+year<- function(){ 
+  n <- readline(prompt="Enter an integer: ")
+  return(as.integer(n))
 }
+k<<-year()
+#閏年的定義為4的倍數但不是100的倍數，或是400的倍數
 
 
+if (k %% 400 == 0){
+  print("是閏年")
+}else if(k %% 4 ==0){
+  if (k %% 100==0){
+    print("不是閏年")
+  }else {
+    print("是閏年")
+  }
+}
 
 
 ########################################################### Task 5
