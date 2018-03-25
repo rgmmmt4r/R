@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
-<body style="background-color:orange;">
-#資料科學與程式設計
+#資料科學程式設計
 #106-2_R_b04303117
 
 #大家好，我是經濟三的顏嘉佑
@@ -47,5 +44,3 @@
 
 #使用Rfacebook 爬JJLin 的粉絲專頁的po文：please refer to：JJ Lin Fan page ver02.R
 
-</body>
-</html>
