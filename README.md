@@ -5,7 +5,7 @@
 
 #以下是每週的學習進度
 
-#week1
+#week1\n
 #完成practice 1&2
 #練習Datacamp Ｒcourse ，到 matric 附近
 #完成 homework 1:please refer to hw_1_answer-task12345ver02.R
