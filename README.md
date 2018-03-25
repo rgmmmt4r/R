@@ -5,6 +5,7 @@
 
 
 #以下是每週的學習進度
+
 :school_satchel:
 #week1
 
@@ -13,6 +14,7 @@
 #練習Datacamp Ｒcourse ，到 matric 附近
 
 #完成 homework 1:please refer to hw_1_answer-task12345ver02.R
+
 :school_satchel:
 #week2
 
@@ -25,12 +27,14 @@
 #閱讀如何使用rvest 套件爬蟲的資料
 
 #完成一次靜態爬蟲：please refer to week2 in class mission ver 02.R
+
 :school_satchel:
 #week3
 
 #看gitbook 上關於dplyr、ggplot的基本介紹
 
 #使用網路上的資料畫一個長條圖：please refer to 練習＿將網路上的資料下載匯入Ｒ後用hist表示.R
+
 :school_satchel:
 #week4
 
