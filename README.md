@@ -4,8 +4,6 @@
 #大家好，我是經濟三的顏嘉佑
 
 
-#以下是我每週的學習內容：
-
 :school_satchel:
 #week1
 
@@ -50,6 +48,8 @@
 #week5
 
 #練習pipe
+
+#學習如何用tf idf，並且觀察deathly_hallows中tf idf 的相關性：please refer to :tf_idf_deadly_hallows
 
 
 
