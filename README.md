@@ -49,7 +49,10 @@
 
 #練習pipe
 
-#學習如何用tf idf，並且觀察deathly_hallows中tf idf 的相關性：please refer to :tf_idf_deadly_hallows
+#學習如何用tf idf，並且觀察deathly_hallows中tf idf 的相關性：please refer to :tf_idf_deadly_hallows ＋ 螢幕截圖
+
+#找出想做的題目：大學生在校所學與就業表現的相關性
+
 
 
 
