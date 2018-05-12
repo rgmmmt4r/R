@@ -1,8 +1,11 @@
 #資料科學程式設計
 #106-2_R_b04303117
 
-#大家好，我是經濟三的顏嘉佑
 
+#大家好，我是經濟三的顏嘉佑
+:school_satchel:
+#project4
+[a relative link](ARule0512 copy.Rmd)
 
 :school_satchel:
 #week1
