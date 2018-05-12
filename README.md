@@ -6,7 +6,7 @@
 :school_satchel:
 #project4
 
-[a relative link](ARule0512 copy.md)
+[a relative link](ARule0512 copy.Rmd)
 
 :school_satchel:
 #week1
