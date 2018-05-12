@@ -1,0 +1,102 @@
+---
+title: "ARule0512"
+output: html_document
+---
+
+```{r setup }
+#目標：試圖藉由觀察幾個變數，來判斷是台灣人還是大陸人
+#資料來源：https://srda.sinica.edu.tw/datasearch_detail.php?id=2340
+library(haven)
+library(ggplot2)
+
+path = file.path( "/Users/rgmmmt4r/Documents/college/Ｒ/week10/data/E10376", "data.sav")
+dataset = read_sav(path)
+#View(dataset)
+
+#變數解釋  
+# b1~b6的數值：大陸地區的問卷 1:必須要有 2:不必須要  台灣地區的問卷：1:是 2:否 
+#b1 請問「最高領導人必須由人民直接選舉產生」是否是民主必須要有的特徵？ 
+#以下兩個問題，沒刮的是大陸問卷，刮的是台灣問卷
+#b3 請問「應該允許激進主張的政黨（民主黨派）參選最高領導人職位」是否是民主必須要有的特徵？
+#b6 請問「全國性重大事項，只允許執政黨黨員（共產黨員）投票」是否是民主必須要有的特徵？
+#c4 中國大陸目前的民主程度是幾分？（1不民主 2居中 3民主）
+
+
+dataset2<-subset(dataset,qtype==2,select=c(area,b1,b3,b6,c4))
+#View(dataset2) 挑出想要的變數
+
+dataset3<-subset(dataset2,(b1<=5)&(b3<=5)&(b6<=5)&(c4<=10))
+# 因為有奇奇怪怪的數字出現（像是c4有人填97！！），所以把它去掉
+
+#畫圖觀察
+area<- table(dataset3$area)
+lbls_area <- paste(names(dataset3$area), "\n", area, sep="")
+pie(area, labels = lbls_area, main="area")
+
+b1<- table(dataset3$b1)
+lbls_b1 <- paste(names(dataset3$b1), "\n", b1, sep="")
+pie(b1, labels = lbls_b1, main="b1")
+
+b3<- table(dataset3$b3)
+lbls_b3<- paste(names(dataset3$b3), "\n", area, sep="")
+pie(area, labels = lbls_b3, main="b3")
+
+b6<- table(dataset3$b6)
+lbls_b6 <- paste(names(dataset3$b6), "\n", area, sep="")
+pie(area, labels = lbls_b6, main="b6")
+
+qplot(dataset3$c4)
+
+#c4 原本是1~10 但是跑出來完全沒有c4 的結果，所以我把它變成1、2和3
+dataset3$c4[dataset3$c4<=3]<-1
+dataset3$c4[(dataset3$c4<=6)&(dataset3$c4>3)]<-2
+dataset3$c4[dataset3$c4>6]<-3
+
+#轉成factor 才能進行arules
+dataset3$area<-as.factor(dataset3$area)
+dataset3$b1<-as.factor(dataset3$b1)
+dataset3$b3<-as.factor(dataset3$b3)
+dataset3$b6<-as.factor(dataset3$b6)
+dataset3$c4<-as.factor(dataset3$c4)
+
+require(arules)
+
+rule <- apriori(dataset3, 
+                parameter=list(minlen=3, supp=0.3, conf=0.6),  
+                appearance = list(default="lhs",
+                                  rhs=c("area=1","area=2") 
+                )
+)  
+
+inspect(rule)
+sort.rule <- sort(rule, by="lift")
+inspect(sort.rule)
+
+subset.matrix <- as.matrix(is.subset(x=sort.rule, y=sort.rule))
+subset.matrix[lower.tri(subset.matrix, diag=T)] <- NA
+redundant <- colSums(subset.matrix, na.rm=T) >= 1
+sort.rule <- sort.rule[!redundant]
+inspect(sort.rule)
+
+
+
+require(arulesViz)
+plot(sort.rule)
+plot(sort.rule, method="graph", control=list(type="items"))
+plot(sort.rule, method="grouped")
+
+#結果
+#受訪對象中如果認為b6=2 c4=2 則是大陸地區的機率偏高（confidence：0.8012685）
+#有0.4149 的受訪者認為 b1=2,b6=2 且他們是大陸人
+#受訪對象中如果認為b6=2 c4=1 則是台灣地區的機率偏高（confidence：0.7222222）
+
+#再貼一次變數
+# b1~b6的數值：大陸地區的問卷 1:必須要有 2:不必須要  台灣地區的問卷：1:是 2:否 
+#b1 請問「最高領導人必須由人民直接選舉產生」是否是民主必須要有的特徵？
+#以下兩個問題，沒刮的是大陸問卷，刮的是台灣問卷
+#b3 請問「應該允許激進主張的政黨（民主黨派）參選最高領導人職位」是否是民主必須要有的特徵？
+#b6 請問「全國性重大事項，只允許共產黨員（執政黨黨員）投票」是否是民主必須要有的特徵？
+#c4 中國大陸目前的民主程度是幾分？（1不民主 2居中 3民主）
+
+
+```
