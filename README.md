@@ -6,7 +6,7 @@
 :school_satchel:
 #project4
 
-[a relative link](ARule0512 copy.html)
+[Contribution guidelines for this project](project4/ARule0512 copy.html)
 
 :school_satchel:
 #week1
