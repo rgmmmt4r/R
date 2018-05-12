@@ -5,7 +5,8 @@
 #大家好，我是經濟三的顏嘉佑
 :school_satchel:
 #project4
-[a relative link](ARule0512 copy.Rmd)
+
+[a relative link](ARule0512 copy.html)
 
 :school_satchel:
 #week1
