@@ -6,7 +6,7 @@
 :school_satchel:
 #project4
 
- [link](https://github.com/rgmmmt4r/106-2_R_b04303117/blob/gh-branches/project4/ARule0512%20copy.html/"Title") 
+ [link](https://rgmmmt4r.github.io/106-2_R_b04303117/project4/ARule0512%20copy.html/"Title") 
 
 :school_satchel:
 #week1
