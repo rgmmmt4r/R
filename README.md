@@ -6,8 +6,6 @@
 :school_satchel:
 #project4
 
- [link](https://rgmmmt4r.github.io/106-2_R_b04303117/project4/ARule0512%20copy.html/"Title") 
-
 https://rgmmmt4r.github.io/106-2_R_b04303117/project4/ARule0512%20copy.html
 
 :school_satchel:
