@@ -10,7 +10,7 @@
 
 資料整理的部分，用Rmd來呈現
 
-https://rgmmmt4r.github.io/106-2_R_b04303117/project2/kaggle_group6_01.html
+https://rgmmmt4r.github.io/106-2_R_b04303117/project2/kaggle_group6_01 copyhtml.html
 
 :school_satchel:
 
