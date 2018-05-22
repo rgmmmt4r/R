@@ -1,0 +1,158 @@
+#kaggle:https://www.kaggle.com/c/santander-customer-satisfaction
+#script:https://www.kaggle.com/lucapolverini/under-23-year-olds-are-always-happy/code
+#第六組：顏嘉佑、黃侲艗、沈祐珍
+#此篇主要目的是用來說明資料整理
+
+library(xgboost)
+library(Matrix)
+
+set.seed(1234)
+
+train <- read.csv("/Users/rgmmmt4r/Documents/college/Ｒ/kaggle/train.csv")
+test  <- read.csv("/Users/rgmmmt4r/Documents/college/Ｒ/kaggle/test.csv")
+#train 有371個column（用來放varialbe），有76020個row（用來放每筆資料）
+#test  有370個column，有75818個row，比test少了一column:TARGET
+
+##### Removing IDs
+train$ID <- NULL
+test.id <- test$ID
+test$ID <- NULL
+
+### Storing the columns' minima and maxima
+#找出train$TARGET==1的row，在這些row的每一column中找出最小值和最大值
+#最小值貼在maxmin的第一column，最大值貼在maxmin的第二column
+maxmin <- data.frame()
+i <- 1
+for(c in (names(train))){
+  maxmin[i,1] <- min(train[train$TARGET==1,c])
+  maxmin[i,2] <- max(train[train$TARGET==1,c])
+  i=i+1
+}
+
+#下兩式是用來改變maxmin的row name 和column name
+row.names(maxmin) <- names(train)
+names(maxmin) <- c('min', 'max')
+head(maxmin)
+
+##### Extracting TARGET
+train.y <- train$TARGET
+train$TARGET <- NULL
+
+##### 0 count per line
+count0 <- function(x) {
+  return( sum(x == 0) )
+}
+train$n0 <- apply(train, 1, FUN=count0)
+test$n0 <- apply(test, 1, FUN=count0)
+##### 上式中1表示按"row"計算，整段程式碼的意思是數train&test中每一row有幾個0，
+##### 然後把數出來的結果貼在新的column：train$n0 ＆test$n0
+
+##### Removing constant features
+##### 如果train中某一column都是同一數字，就拿掉
+cat("\n## Removing the constants features.\n")
+for (f in names(train)) {
+  if (length(unique(train[[f]])) == 1) {
+    cat(f, "is constant in train. We delete it.\n")
+    train[[f]] <- NULL
+    test[[f]] <- NULL
+  }
+}
+
+##### train＆test 中會剩下336個column
+
+##### Removing identical features
+features_pair <- combn(names(train), 2, simplify = F)
+##### 意思是336個column中任選出兩個column，做成list
+toRemove <- c()
+for(pair in features_pair) {
+  f1 <- pair[1]
+  f2 <- pair[2]
+  
+  if (!(f1 %in% toRemove) & !(f2 %in% toRemove)) {
+    if (all(train[[f1]] == train[[f2]])) {
+      cat(f1, "and", f2, "are equals.\n")
+      toRemove <- c(toRemove, f2)
+      ##### 意思是如果f1且f2都不在toRemove 裡，
+      ##### 就檢查兩欄是否一樣，如果一樣，就把f2放到toRemove
+    }
+  }
+}
+
+feature.names <- setdiff(names(train), toRemove)
+#意思是求names(train)與toRemove中不同的元素(只取names(train)中不同的元素) 
+
+train$var38 <- log(train$var38)#以e為底取對數，原因是var38特別大
+test$var38 <- log(test$var38)
+maxmin['var38', 'min'] <- log(maxmin['var38', 'min'])
+maxmin['var38', 'max'] <- log(maxmin['var38', 'max'])
+
+train <- train[, feature.names]
+test <- test[, feature.names]
+##### 拿掉重複的column
+##### train 和test 都剩下307column
+
+#---limit vars in test based on min and max vals of train
+print('Setting min-max lims on test data')
+for(f in colnames(train)){
+  lim <- min(train[,f])
+  test[test[,f]<lim,f] <- lim #將test[,f]中小於lim的值，改為lim
+  
+  lim <- max(train[,f])
+  test[test[,f]>lim,f] <- lim #將test[,f]中大於lim的值，改為lim
+}
+#---
+##### 以下可以參考同組同學的報告
+
+train$TARGET <- train.y
+
+train <- sparse.model.matrix(TARGET ~ ., data = train)
+#關於 sparse.model.matrix可以參考https://www.rdocumentation.org/packages/Matrix/versions/0.999375-3/topics/sparse.model.matrix
+
+dtrain <- xgb.DMatrix(data=train, label=train.y)
+#關於 xgb.DMatrix 可以參考https://www.rdocumentation.org/packages/xgboost/versions/0.6.4.1/topics/xgb.DMatrix
+watchlist <- list(train=dtrain)
+
+param <- list(  objective           = "binary:logistic",
+                booster             = "gbtree",
+                eval_metric         = "auc",
+                eta                 = 0.0202048,
+                max_depth           = 5,
+                subsample           = 0.6815,
+                colsample_bytree    = 0.701
+          
+)
+
+clf <- xgb.train(   params              = param, 
+                    data                = dtrain, 
+                    nrounds             = 560,
+                    verbose             = 1,
+                    watchlist           = watchlist,
+                    maximize            = FALSE
+)
+
+test$TARGET <- -1
+
+test_cp <- test
+test_cp$TARGET <- NULL
+test_cp$n0 <- NULL
+
+test <- sparse.model.matrix(TARGET ~ ., data = test)
+
+preds <- predict(clf, test)
+head(preds)
+
+### Frequentist cut
+for(c in names(test_cp)){
+  preds[test_cp[c] < maxmin[c, 'min']] = 0.0001 
+  preds[test_cp[c] > maxmin[c, 'max']] = 0.0001
+}
+### 以c為var3為例，當test_cp[,var3]的某一row 小於maxmin[var3, 'min']，
+### 則preds中的那一row 改為0.0001 
+### 同理以c為var3為例，當test_cp[,var3]的某一row 大於maxmin[var3, 'max']，
+### 則preds中的那一row 改為0.0001 
+
+
+### Submission
+submission <- data.frame(ID=test.id, TARGET=preds)
+cat("saving the submission file\n")
+write.csv(submission, "submission.csv", row.names = F)
