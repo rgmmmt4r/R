@@ -3,7 +3,17 @@
 
 
 #大家好，我是經濟三的顏嘉佑
+
 :school_satchel:
+
+#project2
+
+資料整理的部分，用Rmd來呈現
+
+https://rgmmmt4r.github.io/106-2_R_b04303117/project2/kaggle_group6_01copyhtml.html
+
+:school_satchel:
+
 #project4
 
 https://rgmmmt4r.github.io/106-2_R_b04303117/project4/ARule0512%20copy.html
