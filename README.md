@@ -6,6 +6,12 @@
 
 :school_satchel:
 
+#project5
+
+https://rgmmmt4r.github.io/106-2_R_b04303117/project5/keras_iris_02copy.html
+
+:school_satchel:
+
 #project2
 
 資料整理的部分，用Rmd來呈現
