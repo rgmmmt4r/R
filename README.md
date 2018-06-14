@@ -7,7 +7,7 @@
 :school_satchel:
 #final project
 
-https://rgmmmt4r.github.io/106-2_R_b04303117/final_group_6_0614.pdf
+可參考final_group_6_0614.pdf
 
 :school_satchel:
 
