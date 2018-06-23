@@ -1,0 +1,109 @@
+#第六組
+#project5
+#目標：想要藉由diamonds 的資料，來複製datacamp(https://www.datacamp.com/community/tutorials/keras-r-deep-learning)的步驟整理資料和學sequential model
+library(ggplot2)
+library(keras)
+diamonds<-read.csv("diamonds.csv")
+diamonds$X<-NULL
+
+#將鑽石的種類分成大於等於價格平均和小於平均
+dia_pavg<-(sum(diamonds$price)/nrow(diamonds))
+dia_pavg
+diamonds$class<-c(0)
+
+for(i in 1:nrow(diamonds)){
+  if(diamonds$price[i]>=dia_pavg){
+    diamonds$class[i]<-"expensive"
+  }
+  else{
+    diamonds$class[i]<-"cheap"
+  }
+}
+#算便宜的和貴的各有多少個
+n_expensive<-0
+n_cheap<-0
+for(i in 1:nrow(diamonds)){
+  if(diamonds$class[i]=="expensive")
+    n_expensive<-n_expensive+1;
+}
+n_expensive
+for(i in 1:nrow(diamonds)){
+  if(diamonds$class[i]=="cheap")
+    n_cheap<-n_cheap+1;
+}
+n_cheap
+n_expensive+n_cheap
+
+#將cut color clarity class變成數值
+diamonds[,2]<-as.numeric(unlist(diamonds[,2]))
+diamonds[,3]<-as.numeric(unlist(diamonds[,3]))
+diamonds[,4]<-as.numeric(unlist(diamonds[,4]))
+for(i in 1:nrow(diamonds)){
+  if(diamonds$class[i]=="expensive"){
+    diamonds$class[i]<-1
+  }
+  else{
+    diamonds$class[i]<-0
+  }
+}
+sum(as.numeric(diamonds$class))
+
+#將price拿掉
+diamonds$price<-NULL
+
+diamonds<-as.matrix(diamonds)
+dimnames(diamonds) <- NULL
+ind <- sample(2, nrow(diamonds), replace=TRUE, prob=c(0.67, 0.33))
+
+# Split the diamonds data
+diamonds.training <- diamonds[ind==1, 1:9]
+diamonds.test <- diamonds[ind==2, 1:9]
+
+# Split the class attribute
+diamonds.trainingtarget <- diamonds[ind==1, 10]
+diamonds.testtarget <- diamonds[ind==2, 10]
+
+# One hot encode training target values
+diamonds.trainLabels <- to_categorical(diamonds.trainingtarget)
+
+# One hot encode test target values
+diamonds.testLabels <- to_categorical(diamonds.testtarget)
+
+# Initialize a sequential model
+model <- keras_model_sequential()
+
+model %>% 
+  layer_dense(units = 8, activation = 'relu', input_shape = c(9)) %>%
+  layer_dense(units = 2, activation = 'softmax')
+
+
+
+# Compile the model
+model %>% compile(
+  loss = 'categorical_crossentropy',
+  optimizer = 'adam',
+  metrics = 'accuracy'
+)
+
+# Fit the model 
+model %>% fit(
+  diamonds.training, 
+  diamonds.trainLabels, 
+  epochs = 2, 
+  batch_size = 1, 
+  validation_split = 0.2
+)
+
+
+# Predict the classes for the test data
+classes <- model %>% predict_classes(diamonds.test, batch_size = 128)
+
+# Confusion matrix
+table(diamonds.testtarget, classes)
+
+
+# Evaluate on test data and labels
+score <- model %>% evaluate(diamonds.test, diamonds.testLabels, batch_size = 128)
+
+# Print the score
+print(score)
