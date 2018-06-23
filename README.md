@@ -13,7 +13,7 @@
 
 #project5
 
-https://rgmmmt4r.github.io/106-2_R_b04303117/project5/keras_iris_02copy.html
+https://rgmmmt4r.github.io/106-2_R_b04303117/project5/project5_group6_diamonds02copy.html
 
 :school_satchel:
 
