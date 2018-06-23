@@ -5,6 +5,11 @@
 #大家好，我是經濟三的顏嘉佑
 
 :school_satchel:
+#final project
+
+可參考final_group_6_0614.pdf
+
+:school_satchel:
 
 #project5
 
