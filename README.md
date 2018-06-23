@@ -7,7 +7,8 @@
 :school_satchel:
 #final project
 
-可參考final_group_6_0614.pdf
+可參考第一次報告的final_group_6_0614.pdf
+以及同組同學的最終報告的ppt
 
 :school_satchel:
 
