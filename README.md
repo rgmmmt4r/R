@@ -7,27 +7,23 @@
 
 :school_satchel:
 final project
-
 可參考第一次報告的final_group_6_0614.pdf
 
 :school_satchel:
-
 project5
 
 https://rgmmmt4r.github.io/106-2_R_b04303117/project5/project5_group6_diamonds02copy.html
 
 :school_satchel:
-
 project4
-
+關於判別台灣和大陸人
 https://rgmmmt4r.github.io/106-2_R_b04303117/project4/ARule0512%20copy.html
 
 :school_satchel:
-
 project2
-
+關於kaggle的競賽：https://www.kaggle.com/lucapolverini/under-23-year-olds-are-always-happy/code
+我們做了這一篇的報告
 資料整理的部分，用Rmd來呈現
-
 https://rgmmmt4r.github.io/106-2_R_b04303117/project2/kaggle_group6_01copy.html
 
 :school_satchel:
