@@ -35,28 +35,28 @@ https://rgmmmt4r.github.io/106-2_R_b04303117/project4/ARule0512%20copy.html
 :school_satchel:
 #week1
 
-#please refer to hw_1_answer-task12345ver02.R
+#可參考 hw_1_answer-task12345ver02.R
 
 :school_satchel:
 #week2
 
 
-#please refer to week2 in class mission ver 02.R
+#可參考 week2 in class mission ver 02.R
 
 :school_satchel:
-#week3
+week3
 
-please refer to 練習＿將網路上的資料下載匯入Ｒ後用hist表示.R
-
-:school_satchel:
-#week4
-
-please refer to：JJ Lin Fan page ver02.R
+可參考 練習＿將網路上的資料下載匯入Ｒ後用hist表示.R
 
 :school_satchel:
-#week5
+week4
 
-please refer to :tf_idf_deadly_hallows ＋ 螢幕截圖
+可參考：JJ Lin Fan page ver02.R
+
+:school_satchel:
+week5
+
+可參考 tf_idf_deadly_hallows 
 
 
 
