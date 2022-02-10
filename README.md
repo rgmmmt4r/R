@@ -9,8 +9,6 @@
 final project
 可參考第一次報告的final_group_6_0614.pdf
 
-:school_satchel:
-project5
 
 :school_satchel:
 project4
