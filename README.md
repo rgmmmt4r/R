@@ -18,7 +18,7 @@ project4
 
 :school_satchel:
 project2
-關於kaggle的競賽：https://www.kaggle.com/lucapolverini/under-23-year-olds-are-always-happy/code
+關於kaggle的競賽：https://www.kaggle.com/lucapolverini/under-23-year-olds-are-always-happy/code  
 我們做了這一篇的報告
 資料整理的部分，用Rmd來呈現
 
