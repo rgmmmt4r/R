@@ -1,9 +1,4 @@
-資料科學程式設計
-106-2_R_b04303117
 
-
-我是NTUECON b04的顏嘉佑
-這份github是我在106-2修資料科學程式設計所使用的
 
 :school_satchel:
 final project
