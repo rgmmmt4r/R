@@ -1,4 +1,10 @@
 
+使用R清資料和跑回歸，並且解讀回歸結果。
+
+
+
+
+
 
 :school_satchel:
 final project
