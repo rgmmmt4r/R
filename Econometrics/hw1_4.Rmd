@@ -1,0 +1,57 @@
+---
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Question4
+```{r}
+set.seed(12345678)
+data1 <- rchisq(100 , 5, ncp = 0)
+result.mean <- mean(data1)
+data2 <- rchisq(10000 , 5, ncp = 0)
+result.mean2 <- mean(data2)
+print(result.mean)
+print(result.mean2)
+```
+The mean of rchisq(10000 , 5)  is closer to population mean, which can be explained by WLLN.\
+The following is the histogram of rchisq(1000,5)
+```{r}
+set.seed(12345678)
+data2 <- rchisq(1000 , 5, ncp = 0)
+var(data2)
+hist(data2,main="1000 chisquare(5) ")
+```
+\newpage
+The following is the histogram of the 1000 means
+```{r}
+set.seed(12345678)
+z <- c(1:1000)
+for( i in z){
+  dataTemp <- rchisq(1000 , 5, ncp = 0)
+  z[i] <-mean(dataTemp)
+}
+var(z)
+mean(z)
+hist(z)
+```
+Z is a normal distribution. The variance and mean are identical to what CLT predict.( mean(z) = mean(data2), var(z) = var(data2)/1000)
+\newpage
+Question 5
+```{r}
+library(readxl)
+dataset <- read_excel("student_sample.xlsx")
+hist(dataset$gpa, main="Gpa")
+```
+\newpage
+```{r}
+reg1 <-lm(gpa~black+Asian+deliquent, data = dataset) 
+summary(reg1)
+```
+In this dataset, the black come with worse gpa. I think it is because the black in general dosen't have the resource to improve their grade, such as tutor, compared to the other race.\
+In this dataset, Asian come with better gpa. I think it is because Asian parents in general are more serious about the grade of their children.\
+Beside race, delinquency comes with poor gpa in this dataset. I think the worse grade is because they are busy doing else.
+
+

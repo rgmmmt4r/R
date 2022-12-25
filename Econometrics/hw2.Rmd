@@ -1,0 +1,69 @@
+---
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r 1.}
+set.seed(1234)
+##Linear Regression
+#Generate the independent variable and the error
+x1=rnorm(100,2,1)
+x2=rpois(100, 4)
+error=rnorm(100,0,1)
+#Generate the dependent variable 
+y1=1+(1*x1)+(-2*x2)+error
+```
+
+
+
+```{r 2.}
+m1=lm(y1~x1+x2)
+summary(m1)
+vcov(m1, complete = TRUE)
+```
+
+
+
+```{r 3.}
+x1=rnorm(100,2,6)
+x2=rpois(100, 4)
+error=rnorm(100,0,1)
+y2=1+(1*x1)+(-2*x2)+error
+m2=lm(y2~x1+x2)
+summary(m2)
+vcov(m2, complete = TRUE)
+```
+Comparing the result in 2 and 3, we can find that both the variance and covariance are smaller.\
+This result is not surprising because the limiting distribution of  $\sqrt{n}(\hat\beta - \beta )$ is $N(0,\sigma_e^2E(X_iX_i')^{-1})$\
+```{r 4.}
+collect1 <- data.frame(aalpha = numeric(0), bbeta1 = numeric(0), bbeta2 = numeric(0))
+for(i in c(1:1000)){ 
+  x1=rnorm(100,2,1)
+  x2=rpois(100, 4)
+  error=rnorm(100,0,1)
+  #Generate the dependent variable 
+  y1=1+(1*x1)+(-2*x2)+error
+  #create the model
+  m1=lm(y1~x1+x2)
+  dataframe_coef <- as.data.frame(summary(m1)$coefficients[ , 1])  
+  dataframe_coef =  t(dataframe_coef)
+  collect1 <- rbind(collect1,dataframe_coef)
+}
+```
+\newpage
+The limiting distribution of  $\sqrt{n}(\hat\beta - \beta )$ is $N(0,\sigma_e^2E(X_iX_i')^{-1})$.\
+The following figures show that they will be the distribution expected.
+```{r}
+hist(collect1$`(Intercept)`,main = "alpha")
+```
+\newpage
+```{r}
+hist(collect1$x1,main = "beta1")
+```
+\newpage
+```{r}
+hist(collect1$x2,main = "beta2")
+```

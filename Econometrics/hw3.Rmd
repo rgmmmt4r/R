@@ -1,0 +1,67 @@
+---
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r ,warning=FALSE,message=FALSE}
+library(readxl)
+library(dplyr)
+collegehookup <- read_excel("collegehookup.xlsx")
+poisson.model <- glm(hookup_sum ~Gender+Age+Hisp+Black+Asian+BMI+
+                       BMI2+college_dad + college_mom + hookup_highschool+
+                       Siblings + ParentsDivorce,
+                     collegehookup, family = poisson(link = "log"))
+summary(poisson.model) 
+```
+I think some of the coefficients can be explained as following:\
+1. The positive hookup_highschool coefficient is because if there is hookup in\
+high school, students would be far more familiar with the process of hookup,\
+making hookup much easier.\
+2. The negative college_mom coefficient is because if mother has a college degree,\
+the control of parents toward the youngling would be stronger,\
+which makes it harder for hookup.\
+3. The positive Siblings coefficient is because having more sibling can improve\ social ability, which makes it easier for hookup.\
+4. The positive ParentsDivorce coefficient is because the control of parent toward children\
+would be alleviated if there is divorce.\
+The following is going to create the variable "peer_effect".
+```{r ,warning=FALSE,message=FALSE}
+library(dplyr)
+df <- data.frame(collegehookup)
+df["peer_effect"] <- -1
+df <- df[order(df$greek_group),]
+this_row = 1
+for( i in c(1:26)){
+  temp_df <- filter(df, greek_group == i)
+  if((!is.null(temp_df))){
+    club_total_times = sum(temp_df$hookup_sum)
+    club_menber_num = nrow(temp_df)
+    if(club_menber_num>1){
+      for( j in c(1:nrow(temp_df))){
+        df[this_row,]["peer_effect"] <-
+          (club_total_times-df[this_row,]["hookup_sum"])/(club_menber_num-1)
+        this_row <- this_row+1
+      }
+    }
+    else{
+      this_row <- this_row+ club_menber_num
+    }
+  } 
+}
+df<-df[!(df$peer_effect==-1 ),]
+poisson.model2 <- glm(hookup_sum ~ peer_effect+Gender+Age+Hisp+Black+
+                        Asian+BMI+BMI2+college_dad + college_mom +
+                        hookup_highschool+Siblings + ParentsDivorce,
+                     df, family = poisson(link = "log"))
+summary(poisson.model2)
+```
+When there is only one student in a club, there is no way to define peer_effect.\
+We remove the data from the dataset.\
+The p-value of peer_effect 0.507813.\
+As a result, we conclude that there is no peer effect.\
+```{r ,warning=FALSE,message=FALSE}
+summary(df$peer_effect)
+```
