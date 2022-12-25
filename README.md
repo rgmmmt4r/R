@@ -1,13 +1,13 @@
 # Econometrics and Statistics  
 1.使用R清資料和跑回歸，並且解讀回歸結果。  
 https://github.com/rgmmmt4r/R/blob/master/Econometrics/hw3.Rmd  
-
+https://github.com/rgmmmt4r/R/blob/master/Econometrics/hw3.pdf  
 2.使用R 進行回歸的統計模擬  
 https://github.com/rgmmmt4r/R/blob/master/Econometrics/hw2.Rmd  
-
+https://github.com/rgmmmt4r/R/blob/master/Econometrics/hw2.pdf  
 3.使用R 進行中央極限分配的統計模擬  
 https://github.com/rgmmmt4r/R/blob/master/Econometrics/hw1_4.Rmd  
-
+https://github.com/rgmmmt4r/R/blob/master/Econometrics/hw1_4.pdf  
 
 
 
